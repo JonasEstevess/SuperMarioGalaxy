@@ -1,0 +1,200 @@
+:root {
+    /* Fonte Outfit (carregue via Google Fonts ou self-host; variáveis abaixo) */
+    --font-outfit: "Outfit", ui-sans-serif, system-ui, sans-serif;
+    --font-body: var(--font-outfit);
+    --font-display: var(--font-outfit);
+    --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+    --fw-black: 900;
+  
+    --fs-2xs: clamp(0.6875rem, 0.65rem + 0.2vw, 0.75rem);
+    --fs-xs: clamp(0.75rem, 0.72rem + 0.25vw, 0.8125rem);
+    --fs-sm: clamp(0.8125rem, 0.78rem + 0.35vw, 0.9375rem);
+    --fs-md: clamp(0.9375rem, 0.9rem + 0.4vw, 1.0625rem);
+    --fs-lg: clamp(1.0625rem, 0.98rem + 0.55vw, 1.25rem);
+    --fs-xl: clamp(1.25rem, 1.05rem + 1vw, 1.5rem);
+    --fs-2xl: clamp(1.5rem, 1.2rem + 1.35vw, 1.875rem);
+    --fs-3xl: clamp(1.875rem, 1.35rem + 2vw, 2.375rem);
+    --fs-display: clamp(2.375rem, 1.65rem + 3.5vw, 3.5rem);
+  
+    --lh-none: 1;
+    --lh-tight: 1.15;
+    --lh-snug: 1.25;
+    --lh-body: 1.55;
+    --lh-relaxed: 1.65;
+  
+    --ls-tight: -0.02em;
+    --ls-normal: 0;
+    --ls-wide: 0.04em;
+    --ls-label: 0.12em;
+  
+    --measure-reading: min(68ch, 100%);
+  
+    /* Cores (Super Mario Galaxy / cósmico) */
+    --bg-deep: #000000;
+    --bg-mid: #0a0a1a;
+    --bg-surface: #141340;
+    --bg-surface-raised: #1c1a52;
+    --bg-overlay: rgba(10, 8, 32, 0.72);
+  
+    --text-primary: #f5f0e8;
+    --text-muted: rgba(126, 92, 37, 0.72);
+    --text-faint: rgba(245, 240, 232, 0.48);
+  
+    --accent-star: #ffd23f;
+    --accent-star-dim: rgba(255, 210, 63, 0.12);
+    --accent-star-glow: rgba(255, 210, 63, 0.35);
+  
+    --cosmic-cyan: #5ce0d8;
+    --cosmic-cyan-dim: rgba(92, 224, 216, 0.16);
+  
+    --cosmic-purple: #6a3cbc;
+    --cosmic-purple-dim: rgba(106, 60, 188, 0.22);
+  
+    --cosmic-rose: #c8508c;
+    --cosmic-rose-dim: rgba(200, 80, 140, 0.18);
+  
+    --border-subtle: rgba(245, 240, 232, 0.12);
+    --border-strong: rgba(245, 240, 232, 0.22);
+  
+    --ring-focus: rgba(92, 224, 216, 0.55);
+  
+    --gradient-cosmic: linear-gradient(
+      145deg,
+      #0a0a1a 0%,
+      #141340 38%,
+      #1f0f4a 65%,
+      #0d0622 100%
+    );
+  
+    --gradient-star-halo: radial-gradient(
+      circle at 30% 20%,
+      rgba(106, 60, 188, 0.45),
+      transparent 55%
+    );
+  
+    --gradient-accent-ribbon: linear-gradient(
+      90deg,
+      var(--cosmic-purple) 0%,
+      var(--cosmic-rose) 45%,
+      var(--accent-star) 100%
+    );
+  
+    /* Spacing */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+  
+    --space-gutter-x: clamp(1rem, 4vw, 2.5rem);
+    --space-section-y: clamp(3.5rem, 8vw, 7.5rem);
+    --space-hero-offset: clamp(4rem, 12vw, 9rem);
+  
+    /* Radius */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+  
+    /* Sombras — discretas, sem glow externo agressivo */
+    --shadow-surface: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 12px 40px rgba(0, 0, 0, 0.45);
+    --shadow-raised: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 18px 48px rgba(0, 0, 0, 0.55);
+    --shadow-inner-glow: inset 0 1px 0 rgba(92, 224, 216, 0.12),
+      inset 0 -1px 0 rgba(106, 60, 188, 0.18);
+    --shadow-star-inner: inset 0 0 0 1px rgba(255, 210, 63, 0.25),
+      inset 0 0 24px rgba(255, 210, 63, 0.08);
+    --shadow-card: var(--shadow-surface), var(--shadow-inner-glow);
+  
+    /* Motion */
+    --ease-linear: linear;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-in-out-soft: cubic-bezier(0.45, 0, 0.55, 1);
+  
+    --duration-instant: 75ms;
+    --duration-fast: 150ms;
+    --duration-base: 250ms;
+    --duration-slow: 400ms;
+    --duration-slower: 600ms;
+  
+    --stagger-tight: 40ms;
+    --stagger-base: 70ms;
+    --stagger-loose: 110ms;
+  
+    --transition-color: color var(--duration-fast) var(--ease-out-expo),
+      background-color var(--duration-fast) var(--ease-out-expo),
+      border-color var(--duration-fast) var(--ease-out-expo);
+    --transition-transform: transform var(--duration-base) var(--ease-out-expo);
+    --transition-opacity: opacity var(--duration-fast) var(--ease-out-expo);
+    --transition-shadow: box-shadow var(--duration-slow) var(--ease-out-expo);
+    --transition-micro: transform var(--duration-fast) var(--ease-spring),
+      opacity var(--duration-fast) var(--ease-out-expo);
+  
+    --motion-reduce: 0.01ms;
+
+    /* Blur para superfícies com backdrop-filter (nav flutuante) */
+    --backdrop-blur-floating: 14px;
+
+    /* Fundo particles.js — seção Personagens (tema escuro por padrão no site) */
+    --particles-dot: #00f5ff;
+    --particles-line: #00d9ff;
+    --particles-accent: #0096c7;
+    --particles-bg-from: #000814;
+    --particles-bg-via: #003566;
+    --particles-bg-to: #0077b6;
+    /* Camada semi-opaca sobre o gradiente — suaviza o azul «claro» do fundo */
+    --particles-bg-scrim: rgba(0, 4, 12, 0.52);
+  }
+
+html[data-theme="light"] {
+    --particles-dot: #0277bd;
+    --particles-line: #0288d1;
+    --particles-accent: #039be5;
+    --particles-bg-from: #e3f2fd;
+    --particles-bg-via: #90caf9;
+    --particles-bg-to: #64b5f6;
+    --particles-bg-scrim: rgba(0, 38, 78, 0.18);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Acima do fundo do body; conteúdo em #conteudo-principal fica por cima (z-index: 1). */
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
