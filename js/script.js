@@ -309,3 +309,39 @@ function initFloatingNav() {
   window.addEventListener('resize', onScrollOrResize);
   onScrollOrResize();
 }
+
+function initMarioScrollAnimation() {
+  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: '+=100%',
+      scrub: true
+    }
+  })
+
+   tl.to('.hero__mario', { y: '100vh', ease: 'none', duration: 1 }, 0)
+   .to('.hero__mario', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
+}
+
+function initYoshiScrollAnimation() {
+  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: '+=100%',
+      scrub: true
+    }
+  })
+
+   tl.to('.hero__yoshi', { y: '100vh', ease: 'none', duration: 1 }, 0)
+   .to('.hero__yoshi', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
+}

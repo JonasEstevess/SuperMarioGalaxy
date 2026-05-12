@@ -190,11 +190,27 @@ html[data-theme="light"] {
     box-sizing: border-box;
   }
 
-  /* Acima do fundo do body; conteúdo em #conteudo-principal fica por cima (z-index: 1). */
   #starfield {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
     mix-blend-mode: screen;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-body);
+    color: var(--text-primary);
+    background-color: var(--bg-deep);
+  }
+
+  /* Empilha a página sobre o canvas do starfield (evita canvas com z-index negativo atrás do body). */
+  #conteudo-principal {
+    position: relative;
+    z-index: 1;
   }
