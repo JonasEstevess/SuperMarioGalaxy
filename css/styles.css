@@ -330,4 +330,19 @@
     text-align: center;
   }
 
- 
+  /* Badge — texto --accent-star, fundo --accent-star-dim (spec §5). */
+  .hero__badge {
+    flex-shrink: 0;
+    display: inline-block;
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-label);
+    line-height: var(--lh-none);
+    text-transform: uppercase;
+    color: var(--accent-star);
+    background-color: var(--accent-star-dim);
+    border: 1px solid rgba(255, 210, 63, 0.18);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-star-inner);
+  }
