@@ -301,3 +301,16 @@
     right: clamp(0.75rem, 5vw, 4.5rem);
     bottom: clamp(16%, 20vh, 30%);
   }
+
+  .hero__star--center {
+    left: 50%;
+    bottom: clamp(8%, 10vh, 15%);
+    z-index: 5;
+    width: clamp(26px, 4.25vw, 44px);
+    transform: translateX(-50%);
+  }
+
+  /* Bloqueio ≈ uma viewport para centrar texto/CTA na 1ª dobra (hero pode ser maior). */
+
+
+ 
