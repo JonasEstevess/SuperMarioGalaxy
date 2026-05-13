@@ -269,3 +269,25 @@
     object-fit: contain;
     object-position: left center;
   }
+
+  /* Yoshi — meio/direita, espelhado para olhar ao centro (spec checklist). */
+  .hero__yoshi {
+    right: clamp(0rem, 1.5vw, 2rem);
+    top: clamp(7%, 10vh, 15%);
+    z-index: 2;
+    width: clamp(120px, 24vw, 180px);
+    height: auto;
+    object-fit: contain;
+    object-position: right center;
+    transform: scaleX(-1);
+  }
+
+  /* Lumas — esquerda, direita e centro inferior (spec §2). */
+  .hero__star {
+    position: absolute;
+    z-index: 4;
+    width: clamp(32px, 5.5vw, 56px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px var(--accent-star-glow));
+  }
