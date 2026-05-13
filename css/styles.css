@@ -164,7 +164,7 @@
     --particles-bg-scrim: rgba(0, 4, 12, 0.52);
   }
 
-html[data-theme="light"] {
+  html[data-theme="light"] {
     --particles-dot: #0277bd;
     --particles-line: #0288d1;
     --particles-accent: #039be5;
@@ -209,8 +209,21 @@ html[data-theme="light"] {
     background-color: var(--bg-deep);
   }
 
-  /* Empilha a página sobre o canvas do starfield (evita canvas com z-index negativo atrás do body). */
   #conteudo-principal {
     position: relative;
     z-index: 1;
+  }
+
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 190vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-inline: var(--space-gutter-x);
+    padding-block: 0;
+    text-align: center;
+    background-color: transparent;
+    overflow: clip;
   }
