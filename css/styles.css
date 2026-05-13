@@ -243,3 +243,29 @@
     display: block;
     pointer-events: none;
   }
+
+  /*
+   * Planeta: ancora ao fim da 1ª dobra mesmo com hero alta (ex.: 150vh).
+   * calc(100% - 100svh) ≈ espaço hero abaixo de uma viewport; metade cortada mantém translateY(50%).
+   */
+  .hero__planet {
+    left: 50%;
+    bottom: max(0px, calc(100% - 100svh));
+    z-index: 0;
+    width: min(236vw, 2240px);
+    max-height: min(124vh, 1480px);
+    transform: translate(-50%, 50%);
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  /* Mario — meio/esquerda flutuante */
+  .hero__mario {
+    left: clamp(0rem, 1.5vw, 2rem);
+    top: clamp(7%, 10vh, 15%);
+    z-index: 2;
+    width: clamp(120px, 24vw, 230px);
+    height: auto;
+    object-fit: contain;
+    object-position: left center;
+  }
