@@ -345,3 +345,70 @@ function initYoshiScrollAnimation() {
    tl.to('.hero__yoshi', { y: '100vh', ease: 'none', duration: 1 }, 0)
    .to('.hero__yoshi', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
 }
+
+function initHeroContentScrollAnimation() {
+  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: '+=100%',
+      scrub: true,
+      pin: '.hero__content-layer',
+      pinSpacing: false
+    }
+  })
+
+   .to('.hero__content-layer', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
+
+   const tl2 = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: '+=100%',
+      scrub: true,
+      pin: '.hero__scroll-indicator',
+      pinSpacing: false
+    }
+  }) 
+
+   .to('.hero__scroll-indicator', { opacity: 0, ease: 'none', duration: 0.1 }, 0.1)
+}
+
+function initPlanetZoomAnimation() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const planet = document.querySelector('.hero__planet');
+  if (!planet) return;
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: '+=100%',
+      scrub: true,
+    },
+  }  ).fromTo(
+    planet,
+    {
+      xPercent: -50,
+      yPercent: 50,
+      scale: 1,
+      force3D: true,
+      transformOrigin: '50% 100%',
+    },
+    {
+      xPercent: -50,
+      yPercent: 50,
+      scale: 2.5,
+      ease: 'none',
+      duration: 1,
+    },
+    0
+  );
+}
