@@ -190,6 +190,7 @@
     box-sizing: border-box;
   }
 
+  /* Acima do fundo do body; conteúdo em #conteudo-principal fica por cima (z-index: 1). */
   #starfield {
     position: fixed;
     inset: 0;
@@ -209,6 +210,7 @@
     background-color: var(--bg-deep);
   }
 
+  /* Empilha a página sobre o canvas do starfield (evita canvas com z-index negativo atrás do body). */
   #conteudo-principal {
     position: relative;
     z-index: 1;
@@ -224,6 +226,20 @@
     padding-inline: var(--space-gutter-x);
     padding-block: 0;
     text-align: center;
+    /* Transparente para o starfield aparecer (o body já garante fundo cósmico). */
     background-color: transparent;
     overflow: clip;
+  }
+
+  .hero__media-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero__media-layer video {
+    position: absolute;
+    display: block;
+    pointer-events: none;
   }
