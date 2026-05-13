@@ -157,3 +157,86 @@
                 </figure>
             </div>
         </section>
+
+        <section id="trailers" class="trailers" aria-labelledby="trailers-title">
+            <div class="trailers__bg-text" aria-hidden="true">TRAILERS</div>
+
+            <header class="trailers__header">
+                <p class="trailers__eyebrow">Assista agora</p>
+                <h2 id="trailers-title" class="trailers__title">Trailers oficiais</h2>
+                <p class="trailers__subtitle">Clipes da aventura no espaco</p>
+            </header>
+
+            <div class="trailers__carousel" role="region" aria-roledescription="carousel" aria-label="Trailers oficiais"
+                tabindex="0">
+                <p id="trailers-carousel-live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+                <div class="trailers__viewport">
+                    <ul class="trailers__track">
+                        <li id="trailers-slide-0" class="trailers__slide" aria-roledescription="slide" aria-label="1 de 4">
+                            <div class="trailers__player">
+                                <iframe
+                                    data-src="https://www.youtube-nocookie.com/embed/8uaQnl9Bbdw?rel=0"
+                                    src="https://www.youtube-nocookie.com/embed/8uaQnl9Bbdw?rel=0"
+                                    title="Super Mario Galaxy: O Filme — trailer principal"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </li>
+                        <li id="trailers-slide-1" class="trailers__slide" aria-roledescription="slide" aria-label="2 de 4">
+                            <div class="trailers__player">
+                                <iframe
+                                    data-src="https://www.youtube-nocookie.com/embed/QVD48BOcwms?rel=0"
+                                    title="The Super Mario Bros. Movie — teaser oficial"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </li>
+                        <li id="trailers-slide-2" class="trailers__slide" aria-roledescription="slide" aria-label="3 de 4">
+                            <div class="trailers__player">
+                                <iframe
+                                    data-src="https://www.youtube-nocookie.com/embed/TnGl01FkMMo?rel=0"
+                                    title="The Super Mario Bros. Movie — trailer oficial"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </li>
+                        <li id="trailers-slide-3" class="trailers__slide" aria-roledescription="slide" aria-label="4 de 4">
+                            <div class="trailers__player">
+                                <iframe
+                                    data-src="https://www.youtube-nocookie.com/embed/M3bHQqc62DE?rel=0"
+                                    title="The Super Mario Bros. Movie — trailer final"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="trailers__controls">
+                    <button type="button" class="trailers__arrow trailers__arrow--prev" aria-label="Trailer anterior">
+                        <span aria-hidden="true">&#8249;</span>
+                    </button>
+                    <div class="trailers__dots" role="tablist" aria-label="Selecao de trailers">
+                        <button type="button" class="trailers__dot is-active" role="tab" aria-label="Ir para trailer 1"
+                            aria-selected="true" aria-controls="trailers-slide-0" id="trailers-tab-0"></button>
+                        <button type="button" class="trailers__dot" role="tab" aria-label="Ir para trailer 2"
+                            aria-selected="false" aria-controls="trailers-slide-1" id="trailers-tab-1"></button>
+                        <button type="button" class="trailers__dot" role="tab" aria-label="Ir para trailer 3"
+                            aria-selected="false" aria-controls="trailers-slide-2" id="trailers-tab-2"></button>
+                        <button type="button" class="trailers__dot" role="tab" aria-label="Ir para trailer 4"
+                            aria-selected="false" aria-controls="trailers-slide-3" id="trailers-tab-3"></button>
+                    </div>
+                    <button type="button" class="trailers__arrow trailers__arrow--next" aria-label="Proximo trailer">
+                        <span aria-hidden="true">&#8250;</span>
+                    </button>
+                </div>
+            </div>
+        </section>
