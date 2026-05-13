@@ -491,3 +491,16 @@
     border-radius: var(--radius-full);
     background-color: var(--text-primary);
   }
+
+  .hero__cta-icon::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-inline-start: 2px;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent var(--cosmic-purple);
+  }
+
+  
