@@ -346,3 +346,60 @@
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-star-inner);
   }
+
+  /* Título: linha1 --text-primary, linha2 --accent-star (spec §5). */
+  .hero__title {
+    margin: var(--space-5) 0 var(--space-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-display);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+  }
+
+  /* Desktop: ≥80px (5rem); escala rápido a partir de ~1200px de largura. */
+
+  
+
+  .hero__subtitle {
+    margin: 0 0 var(--space-6);
+    max-width: var(--measure-reading);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* CTA — fundo --cosmic-purple (spec §5); ícone claro + play roxo (spec §7). */
+  .
+
+  .hero__cta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 42%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+      92deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 42%,
+      rgba(255, 255, 255, 0.45) 50%,
+      rgba(255, 255, 255, 0.08) 58%,
+      transparent 100%
+    );
+    transform: translateX(-120%) skewX(-14deg);
+    animation: hero-cta-light-sweep 5s linear infinite;
+  }
+
+  
+    }
+  }
