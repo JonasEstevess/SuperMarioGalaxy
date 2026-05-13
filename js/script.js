@@ -412,3 +412,331 @@ function initPlanetZoomAnimation() {
     0
   );
 }
+
+function initPersonagensParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.getElementById('personagens');
+  if (!section) return;
+
+  if (
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return;
+  }
+
+  const parallaxConfigs = [
+    {
+      selector: '.personagem--mario',
+      from: { x: -14, y: -42 },
+      to: { x: 22, y: 188 },
+      scrub: 0.8,
+    },
+    {
+      selector: '.personagem--luigi',
+      from: { x: 18, y: -28 },
+      to: { x: -32, y: 210 },
+      scrub: 3.3,
+    },
+    {
+      selector: '.personagem--peach',
+      from: { x: -8, y: -50 },
+      to: { x: 24, y: 164 },
+      scrub: 1.05,
+    },
+    {
+      selector: '.personagem--rosalina',
+      from: { x: -20, y: -24 },
+      to: { x: 36, y: 232 },
+      scrub: 1.45,
+    },
+    {
+      selector: '.personagem--yoshi',
+      from: { x: 14, y: -38 },
+      to: { x: -46, y: 176 },
+      scrub: 0.65,
+    },
+    {
+      selector: '.personagem--bowser-jr',
+      from: { x: -16, y: -18 },
+      to: { x: 30, y: 198 },
+      scrub: 1.15,
+    },
+  ];
+
+  ScrollTrigger.matchMedia({
+    '(prefers-reduced-motion: no-preference) and (min-width: 768px)': function () {
+      parallaxConfigs.forEach((cfg) => {
+        const el = document.querySelector(cfg.selector);
+        if (!el) return;
+
+        gsap.fromTo(
+          el,
+          {
+            x: cfg.from.x,
+            y: cfg.from.y,
+            force3D: true,
+          },
+          {
+            x: cfg.to.x,
+            y: cfg.to.y,
+            ease: 'none',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: cfg.scrub,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      });
+    },
+  });
+}
+
+/**
+ * Fundo particles.js na seção #personagens (cores via tokens --particles-* no :root).
+ */
+function initPersonagensBg() {
+  const section = document.getElementById('personagens');
+  const holderId = 'personagens-particles-js';
+
+  if (!section || typeof window.particlesJS !== 'function') {
+    return;
+  }
+
+  const root = document.documentElement;
+
+  function hexToRgbParticles(hex) {
+    if (typeof hex !== 'string' || !hex.trim()) {
+      return null;
+    }
+    const h = hex.trim();
+    if (typeof window.hexToRgb === 'function') {
+      return window.hexToRgb(h);
+    }
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const expanded = h.replace(shorthandRegex, (_m, r, g, b) => r + r + g + g + b + b);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(expanded);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        }
+      : null;
+  }
+
+  function readParticleColorTokens() {
+    const cs = getComputedStyle(root);
+    return {
+      dot: cs.getPropertyValue('--particles-dot').trim(),
+      line: cs.getPropertyValue('--particles-line').trim(),
+      accent: cs.getPropertyValue('--particles-accent').trim(),
+    };
+  }
+
+  function applyParticlesColorsFromCss(pJS) {
+    const t = readParticleColorTokens();
+    const dot = t.dot || '#00f5ff';
+    const line = t.line || '#00d9ff';
+    const accent = t.accent || '#0096c7';
+
+    pJS.particles.color.value = dot;
+    const rgbDot = hexToRgbParticles(dot);
+    if (rgbDot) {
+      pJS.particles.color.rgb = rgbDot;
+    }
+
+    pJS.particles.shape.stroke.color = accent;
+
+    pJS.particles.line_linked.color = line;
+    const rgbLine = hexToRgbParticles(line);
+    if (rgbLine) {
+      pJS.particles.line_linked.color_rgb_line = rgbLine;
+    }
+  }
+
+  const prefersReduceMq =
+    typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : null;
+
+  function prefersReducedMotion() {
+    return prefersReduceMq ? prefersReduceMq.matches : false;
+  }
+
+  if (prefersReducedMotion()) {
+    section.classList.add('personagens--particles-reduced');
+    return;
+  }
+
+  const narrowMq =
+    typeof window.matchMedia === 'function'
+      ? window.matchMedia('(max-width: 767.98px)')
+      : null;
+
+  function isNarrowViewport() {
+    return narrowMq ? narrowMq.matches : false;
+  }
+
+  function buildParticlesConfig() {
+    const t = readParticleColorTokens();
+    const mobile = isNarrowViewport();
+
+    return {
+      particles: {
+        number: {
+          value: mobile ? 80 : 140,
+          density: { enable: true, value_area: 800 },
+        },
+        color: { value: t.dot || '#00f5ff' },
+        shape: {
+          type: 'circle',
+          stroke: {
+            width: 0.5,
+            color: t.accent || '#0096c7',
+          },
+        },
+        opacity: {
+          value: 0.7,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 1,
+            opacity_min: 0.3,
+            sync: false,
+          },
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 2,
+            size_min: 1,
+            sync: false,
+          },
+        },
+        line_linked: {
+          enable: true,
+          distance: 160,
+          color: t.line || '#00d9ff',
+          opacity: 0.4,
+          width: 1.2,
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: 'none',
+          random: true,
+          straight: false,
+          out_mode: 'bounce',
+        },
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: { enable: true, mode: 'grab' },
+          onclick: { enable: !mobile, mode: 'push' },
+          resize: true,
+        },
+        modes: {
+          grab: {
+            distance: 220,
+            line_linked: { opacity: 0.8 },
+          },
+          push: { particles_nb: 4 },
+        },
+      },
+      retina_detect: !mobile,
+    };
+  }
+
+  window.particlesJS(holderId, buildParticlesConfig());
+
+  const pjsEntry = window.pJSDom && window.pJSDom[window.pJSDom.length - 1];
+  const pJS = pjsEntry && pjsEntry.pJS;
+  if (!pJS) {
+    return;
+  }
+
+  applyParticlesColorsFromCss(pJS);
+
+  const cancelRaf =
+    window.cancelRequestAnimFrame ||
+    window.cancelAnimationFrame ||
+    window.webkitCancelRequestAnimationFrame ||
+    clearTimeout;
+
+  let viewportPaused = false;
+
+  function pausePersonagensDraw() {
+    if (viewportPaused) return;
+    cancelRaf(pJS.fn.drawAnimFrame);
+    viewportPaused = true;
+  }
+
+  function resumePersonagensDraw() {
+    if (!viewportPaused) return;
+    viewportPaused = false;
+    pJS.fn.vendors.draw();
+  }
+
+  const io =
+    typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(
+          (entries) => {
+            const visible = entries.some((e) => e.isIntersecting);
+            if (visible) {
+              resumePersonagensDraw();
+            } else {
+              pausePersonagensDraw();
+            }
+          },
+          { root: null, threshold: 0, rootMargin: '0px' }
+        )
+      : null;
+
+  if (io) {
+    io.observe(section);
+  }
+
+  let themeDebounce = 0;
+  const themeObserver =
+    typeof MutationObserver !== 'undefined'
+      ? new MutationObserver(() => {
+          window.clearTimeout(themeDebounce);
+          themeDebounce = window.setTimeout(() => {
+            applyParticlesColorsFromCss(pJS);
+          }, 50);
+        })
+      : null;
+
+  if (themeObserver) {
+    themeObserver.observe(root, {
+      attributes: true,
+      attributeFilter: ['class', 'data-theme'],
+    });
+  }
+
+  if (prefersReduceMq) {
+    const onReduce = () => {
+      if (prefersReduceMq.matches) {
+        pausePersonagensDraw();
+      } else {
+        resumePersonagensDraw();
+      }
+    };
+    if (typeof prefersReduceMq.addEventListener === 'function') {
+      prefersReduceMq.addEventListener('change', onReduce);
+    } else {
+      prefersReduceMq.addListener(onReduce);
+    }
+  }
+}
