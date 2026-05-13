@@ -473,3 +473,21 @@
       opacity: 0;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__cta::before {
+      animation: none;
+    }
+  }
+
+  .hero__cta-icon {
+    flex-shrink: 0;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: var(--radius-full);
+    background-color: var(--text-primary);
+  }
