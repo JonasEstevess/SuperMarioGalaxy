@@ -42,4 +42,48 @@
             </li>
         </ul>
     </nav>
+
+    <main id="conteudo-principal">
+        <section id="hero" class="hero" aria-labelledby="hero-heading">
+            <div class="hero__media-layer" aria-hidden="true">
+                <video class="hero__mario" autoplay loop muted playsinline>
+                    <source src="assets/videos/mario-clip-alpha.webm" type="video/webm">
+                    <source src="assets/videos/mario-clip-min.mp4" type="video/mp4">
+                </video>
+                <video class="hero__yoshi" autoplay loop muted playsinline>
+                    <source src="assets/videos/yoshi-video-alpha.webm" type="video/webm">
+                    <source src="assets/videos/yoshi-video-min.mp4" type="video/mp4">
+                </video>
+                <video class="hero__planet" autoplay loop muted playsinline>
+                    <source src="assets/videos/planet-3d-alpha.webm" type="video/webm">
+                    <source src="assets/videos/planet-3d-min.mp4" type="video/mp4">
+                </video>
+                <img class="hero__star hero__star--left" src="assets/images/estrela-min.webp" alt="" aria-hidden="true"
+                    width="72" height="72" decoding="async">
+                <img class="hero__star hero__star--right" src="assets/images/estrela-min.webp" alt="" aria-hidden="true"
+                    width="72" height="72" decoding="async">
+                <img class="hero__star hero__star--center" src="assets/images/estrela-min.webp" alt=""
+                    aria-hidden="true" width="56" height="56" decoding="async">
+            </div>
+
+            <div class="hero__content-layer">
+                <div class="hero__badge">NOS CINEMAS AGORA</div>
+                <h1 id="hero-heading" class="hero__title">
+                    <span class="hero__title-line1">Super Mario</span>
+                    <span class="hero__title-line2">Galaxy: O Filme</span>
+                </h1>
+                <p class="hero__subtitle">UMA AVENTURA ÉPICA PELO COSMOS</p>
+                <button type="button" class="hero__cta">
+                    Assistir Trailer
+                    <span class="hero__cta-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="hero__scroll-indicator">
+                <span class="hero__scroll-text">ROLE PARA EXPLORAR</span>
+            </div>
+        </section>
+
+
+    </main>
 </body>
