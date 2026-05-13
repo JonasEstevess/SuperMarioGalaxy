@@ -503,4 +503,15 @@
     border-color: transparent transparent transparent var(--cosmic-purple);
   }
 
-  
+  .hero__scroll-indicator {
+    position: relative;
+    z-index: 12;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: var(--space-6);
+    padding-bottom: clamp(8vh, 12vh, 18vh);
+    pointer-events: none;
+    bottom: 100px;
+  }
