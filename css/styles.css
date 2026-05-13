@@ -515,3 +515,13 @@
     pointer-events: none;
     bottom: 100px;
   }
+
+  .hero__scroll-text {
+    font-family: var(--font-body);
+    font-size: var(--fs-2xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-label);
+    line-height: var(--lh-none);
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--text-primary) 88%, transparent);
+  }
