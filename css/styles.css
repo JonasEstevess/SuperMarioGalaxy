@@ -386,7 +386,33 @@
   }
 
   /* CTA — fundo --cosmic-purple (spec §5); ícone claro + play roxo (spec §7). */
-  .
+  .hero__cta {
+    position: relative;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin: 0;
+    padding: var(--space-4) var(--space-10);
+    overflow: hidden;
+    appearance: none;
+    border: 1px solid color-mix(in srgb, var(--cosmic-purple) 72%, transparent);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-normal);
+    line-height: var(--lh-none);
+    color: var(--text-primary);
+    background-color: var(--cosmic-purple);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 var(--space-3) var(--space-10) rgba(0, 0, 0, 0.4);
+    transition: var(--transition-transform), filter var(--duration-fast)
+      var(--ease-out-expo);
+  }
 
   .hero__cta::before {
     content: "";
@@ -409,6 +435,41 @@
     animation: hero-cta-light-sweep 5s linear infinite;
   }
 
-  
+  .hero__cta > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__cta:hover {
+    filter: brightness(1.08);
+  }
+
+  .hero__cta:active {
+    transform: scale(0.98);
+    transition-timing-function: var(--ease-linear);
+  }
+
+  .hero__cta:focus-visible {
+    outline: 2px solid var(--ring-focus);
+    outline-offset: 4px;
+  }
+
+  @keyframes hero-cta-light-sweep {
+    0%,
+    86% {
+      transform: translateX(-120%) skewX(-14deg);
+      opacity: 0;
+    }
+    87% {
+      opacity: 1;
+    }
+    97% {
+      transform: translateX(320%) skewX(-14deg);
+      opacity: 1;
+    }
+    98%,
+    100% {
+      transform: translateX(320%) skewX(-14deg);
+      opacity: 0;
     }
   }
