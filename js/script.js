@@ -991,3 +991,83 @@ function initEstreiaCountdown() {
     { passive: true },
   );
 }
+
+function initTrailersCarousel() {
+  const root = document.querySelector('.trailers__carousel');
+  if (!root) return;
+
+  const track = root.querySelector('.trailers__track');
+  const slides = root.querySelectorAll('.trailers__slide');
+  const iframes = root.querySelectorAll('.trailers__player iframe');
+  const prevBtn = root.querySelector('.trailers__arrow--prev');
+  const nextBtn = root.querySelector('.trailers__arrow--next');
+  const dots = root.querySelectorAll('.trailers__dots .trailers__dot');
+  const liveEl = document.getElementById('trailers-carousel-live');
+
+  const total = slides.length;
+  if (!track || total === 0 || iframes.length !== total) return;
+
+  let index = 0;
+
+  function setIframeSources(activeIndex) {
+    iframes.forEach((iframe, i) => {
+      const url = iframe.getAttribute('data-src');
+      if (!url) return;
+      if (i === activeIndex) {
+        if (iframe.src !== url) iframe.src = url;
+      } else {
+        iframe.src = 'about:blank';
+      }
+    });
+  }
+
+  function announce() {
+    if (!liveEl) return;
+    liveEl.textContent = `Trailer ${index + 1} de ${total}`;
+  }
+
+  function updateUI() {
+    track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      if (i === index) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+    slides.forEach((slide, i) => {
+      slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+    });
+    setIframeSources(index);
+    announce();
+  }
+
+  function goTo(newIndex) {
+    index = ((newIndex % total) + total) % total;
+    updateUI();
+  }
+
+  prevBtn?.addEventListener('click', () => goTo(index - 1));
+  nextBtn?.addEventListener('click', () => goTo(index + 1));
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => goTo(i));
+  });
+
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goTo(index - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goTo(index + 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goTo(total - 1);
+    }
+  });
+
+  updateUI();
+}
