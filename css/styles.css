@@ -291,3 +291,13 @@
     object-fit: contain;
     filter: drop-shadow(0 0 8px var(--accent-star-glow));
   }
+
+  .hero__star--left {
+    left: clamp(0.75rem, 5vw, 4.5rem);
+    bottom: clamp(16%, 20vh, 30%);
+  }
+
+  .hero__star--right {
+    right: clamp(0.75rem, 5vw, 4.5rem);
+    bottom: clamp(16%, 20vh, 30%);
+  }
