@@ -740,3 +740,254 @@ function initPersonagensBg() {
     }
   }
 }
+
+/**
+ * Contador regressivo (#estreia): mudança com leve deslize para baixo nos dígitos.
+ */
+function initEstreiaCountdown() {
+  /** @typedef {{ dia: number; hor: number; min: number; seg: number }} TempoSplit */
+
+  if (!document.querySelector('#estreia .countdown-unit')) return;
+
+  const ALVO_ESTREIA = new Date('2026-12-25T00:00:00').getTime();
+  const UNIT_KEYS = /** @type {const} */ (['dia', 'hor', 'min', 'seg']);
+  const liveEl = document.getElementById('estreia-countdown-live');
+  let intervalId = 0;
+
+  const reduceMq =
+    typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : null;
+
+  function prefersReducedMotion() {
+    return reduceMq ? reduceMq.matches : false;
+  }
+
+  /** @returns {TempoSplit} */
+  function calcularRestante() {
+    const agora = Date.now();
+    const diff = Math.max(0, ALVO_ESTREIA - agora);
+    return {
+      dia: Math.floor(diff / 86400000),
+      hor: Math.floor((diff % 86400000) / 3600000),
+      min: Math.floor((diff % 3600000) / 60000),
+      seg: Math.floor((diff % 60000) / 1000),
+    };
+  }
+
+  /** @returns {TempoSplit} */
+  function estadoTravadoZerado() {
+    return { dia: 0, hor: 0, min: 0, seg: 0 };
+  }
+
+  /**
+   * @param {number} n
+   * @param {'dia'|'hor'|'min'|'seg'} unit
+   * @returns {string}
+   */
+  function formatar(n, unit) {
+    const diff = ALVO_ESTREIA - Date.now();
+    if (diff <= 0 && unit === 'dia') return '000';
+    if (unit === 'dia') return String(n);
+    return String(n).padStart(2, '0');
+  }
+
+  /**
+   * @param {'dia'|'hor'|'min'|'seg'} unitKey
+   * @returns {HTMLElement | null}
+   */
+  function elValorParaUnidade(unitKey) {
+    const root = document.querySelector(`.countdown-unit[data-unit="${unitKey}"]`);
+    if (!root) return null;
+    return root.querySelector('.countdown-value');
+  }
+
+  /**
+   * @param {'dia'|'hor'|'min'|'seg'} unitKey
+   * @param {string} formatted
+   */
+  function pintarValorEstatico(unitKey, formatted) {
+    const el = elValorParaUnidade(unitKey);
+    if (!el) return;
+    el.classList.remove('countdown-value--drop');
+    el.textContent = formatted;
+  }
+
+  /**
+   * @param {'dia'|'hor'|'min'|'seg'} unitKey
+   * @param {string} formatted
+   */
+  function aplicarMudancaComDeslize(unitKey, formatted) {
+    const el = elValorParaUnidade(unitKey);
+    if (!el) return;
+
+    el.classList.remove('countdown-value--drop');
+    void el.offsetWidth;
+    el.textContent = formatted;
+    el.classList.add('countdown-value--drop');
+
+    const onEnd = (e) => {
+      if (e.animationName !== 'countdown-slide-down') return;
+      el.removeEventListener('animationend', onEnd);
+      el.classList.remove('countdown-value--drop');
+    };
+    el.addEventListener('animationend', onEnd);
+  }
+
+  /** @type {TempoSplit} */
+  let valorAtual;
+
+  let ultimoBlocoMinutoAnunciado = -1;
+
+  /**
+   * @param {TempoSplit} v
+   * @returns {number}
+   */
+  function paraBlocoMinuto(v) {
+    return ((v.dia * 24 + v.hor) * 60 + v.min);
+  }
+
+  /**
+   * @param {TempoSplit} v
+   */
+  function atualizarAriaSeNecessario(v) {
+    if (!liveEl) return;
+
+    const diff = ALVO_ESTREIA - Date.now();
+    if (diff <= 0) {
+      if (ultimoBlocoMinutoAnunciado !== -2) {
+        liveEl.textContent =
+          'Contagem terminada para a estreia de Super Mario Galaxy: O Filme no dia vinte e cinco de dezembro de dois mil e vinte e seis.';
+        ultimoBlocoMinutoAnunciado = -2;
+      }
+      return;
+    }
+
+    const bloco = paraBlocoMinuto(v);
+    if (bloco !== ultimoBlocoMinutoAnunciado || ultimoBlocoMinutoAnunciado === -1) {
+      ultimoBlocoMinutoAnunciado = bloco;
+
+      function plural(unit, label, singularLabel) {
+        return `${unit} ${unit === 1 ? singularLabel : label}`;
+      }
+
+      const partes = [
+        plural(v.dia, 'dias', 'dia'),
+        plural(v.hor, 'horas', 'hora'),
+        plural(v.min, 'minutos', 'minuto'),
+        plural(v.seg, 'segundos', 'segundo'),
+      ];
+
+      liveEl.textContent =
+        `Restam ${partes.slice(0, 3).join(', ')} e ${partes[3]} para a estreia nos cinemas na meia-noite local de vinte e cinco de dezembro de dois mil e vinte e seis.`;
+    }
+  }
+
+  /**
+   * Pinta todos os dígitos a partir dos números (sem animação). Usado ao voltar para a aba.
+   * @param {TempoSplit} v
+   */
+  function sincronizarTudoSilencioso(v) {
+    document.querySelectorAll('.countdown-value.countdown-value--drop').forEach((el) => {
+      el.classList.remove('countdown-value--drop');
+    });
+
+    for (let i = 0; i < UNIT_KEYS.length; i++) {
+      const key = UNIT_KEYS[i];
+      pintarValorEstatico(key, formatar(v[key], key));
+    }
+
+    atualizarAriaSeNecessario(v);
+  }
+
+  /** @returns {TempoSplit} */
+  function obterOuTravar() {
+    const diff = ALVO_ESTREIA - Date.now();
+    if (diff <= 0) return estadoTravadoZerado();
+    return calcularRestante();
+  }
+
+  /** Conclui pintura/alvo apenas uma vez quando a data já passou ou acaba agora */
+  let contagemEncerrada = false;
+
+  function finalizarContagemSeNecessario() {
+    valorAtual = estadoTravadoZerado();
+    sincronizarTudoSilencioso(valorAtual);
+
+    if (intervalId) {
+      window.clearInterval(intervalId);
+      intervalId = 0;
+    }
+
+    if (!contagemEncerrada) {
+      contagemEncerrada = true;
+      window.dispatchEvent(
+        new CustomEvent('estreia-countdown-complete', {
+          bubbles: true,
+          detail: { alvoTimestamp: ALVO_ESTREIA },
+        }),
+      );
+    }
+  }
+
+  function tickContador() {
+    if (Date.now() >= ALVO_ESTREIA) {
+      finalizarContagemSeNecessario();
+      return;
+    }
+
+    const novo = calcularRestante();
+
+    for (let i = 0; i < UNIT_KEYS.length; i++) {
+      const key = UNIT_KEYS[i];
+      if (novo[key] !== valorAtual[key]) {
+        const txt = formatar(novo[key], key);
+        if (prefersReducedMotion()) {
+          pintarValorEstatico(key, txt);
+        } else {
+          aplicarMudancaComDeslize(key, txt);
+        }
+        valorAtual[key] = novo[key];
+      }
+    }
+
+    atualizarAriaSeNecessario(novo);
+  }
+
+  valorAtual = calcularRestante();
+
+  if (Date.now() >= ALVO_ESTREIA) {
+    finalizarContagemSeNecessario();
+  } else {
+    sincronizarTudoSilencioso(valorAtual);
+    intervalId = window.setInterval(tickContador, 1000);
+  }
+
+  document.addEventListener(
+    'visibilitychange',
+    () => {
+      if (document.visibilityState !== 'visible') return;
+
+      if (Date.now() >= ALVO_ESTREIA) {
+        finalizarContagemSeNecessario();
+        return;
+      }
+
+      valorAtual = obterOuTravar();
+      sincronizarTudoSilencioso(valorAtual);
+
+      if (!intervalId) {
+        intervalId = window.setInterval(tickContador, 1000);
+      }
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    'beforeunload',
+    () => {
+      if (intervalId) window.clearInterval(intervalId);
+    },
+    { passive: true },
+  );
+}
