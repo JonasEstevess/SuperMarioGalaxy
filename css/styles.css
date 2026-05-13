@@ -311,6 +311,23 @@
   }
 
   /* Bloqueio ≈ uma viewport para centrar texto/CTA na 1ª dobra (hero pode ser maior). */
-
+  .hero__content-layer {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, 42rem);
+    max-width: 100%;
+    min-height: 100svh;
+    margin-inline: auto;
+    gap: var(--space-2);
+    padding-inline: var(--space-2);
+    padding-block: clamp(3rem, 8vh, var(--space-16));
+    box-sizing: border-box;
+    text-align: center;
+  }
 
  
