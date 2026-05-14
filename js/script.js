@@ -991,3 +991,61 @@ function initEstreiaCountdown() {
     { passive: true },
   );
 }
+
+function initTrailersCarousel() {
+  const root = document.querySelector('.trailers__carousel');
+  if (!root) return;
+
+  const track = root.querySelector('.trailers__track');
+  const slides = root.querySelectorAll('.trailers__slide');
+  const iframes = root.querySelectorAll('.trailers__player iframe');
+  const prevBtn = root.querySelector('.trailers__arrow--prev');
+  const nextBtn = root.querySelector('.trailers__arrow--next');
+  const dots = root.querySelectorAll('.trailers__dots .trailers__dot');
+  const liveEl = document.getElementById('trailers-carousel-live');
+
+ 
+
+  function goTo(newIndex) {
+    index = ((newIndex % total) + total) % total;
+    updateUI();
+  }
+
+  prevBtn?.addEventListener('click', () => goTo(index - 1));
+  nextBtn?.addEventListener('click', () => goTo(index + 1));
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => goTo(i));
+  });
+
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goTo(index - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goTo(index + 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goTo(total - 1);
+    }
+  });
+
+  updateUI();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initFloatingNav();
+  initStarfield();
+  initMarioScrollAnimation();
+  initYoshiScrollAnimation();
+  initHeroContentScrollAnimation();
+  initPlanetZoomAnimation();
+  initPersonagensParallax();
+  initPersonagensBg();
+  initTrailersCarousel();
+  initEstreiaCountdown();
+});
