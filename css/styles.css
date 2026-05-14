@@ -546,4 +546,23 @@
       bottom: clamp(14%, 18vh, 26%);
       width: clamp(26px, 7vw, 40px);
     }
+
+    .hero__star--right {
+      right: var(--space-2);
+      bottom: clamp(14%, 18vh, 26%);
+      width: clamp(26px, 7vw, 40px);
+    }
+
+    .hero__star--center {
+      bottom: clamp(6%, 8vh, 12%);
+      width: clamp(22px, 5.5vw, 34px);
+    }
+
+    .hero__scroll-indicator {
+      padding-bottom: clamp(16vh, 20vh, 26vh);
+    }
+
+    .hero__cta {
+      padding-inline: var(--space-8);
+    }
   }
