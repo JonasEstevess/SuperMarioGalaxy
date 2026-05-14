@@ -525,3 +525,25 @@
     text-transform: uppercase;
     color: color-mix(in srgb, var(--text-primary) 88%, transparent);
   }
+
+  @media (max-width: 767.98px) {
+    .hero__mario,
+    .hero__yoshi {
+      width: clamp(88px, 26vw, 160px);
+      top: clamp(5%, 7vh, 11%);
+      opacity: 0.94;
+    }
+
+    .hero__planet {
+      width: min(256vw, 1280px);
+      bottom: max(0px, calc(100% - 100svh));
+      max-height: min(96vh, 1040px);
+      transform: translate(-50%, 50%);
+    }
+
+    .hero__star--left {
+      left: var(--space-2);
+      bottom: clamp(14%, 18vh, 26%);
+      width: clamp(26px, 7vw, 40px);
+    }
+  }
