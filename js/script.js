@@ -1004,7 +1004,42 @@ function initTrailersCarousel() {
   const dots = root.querySelectorAll('.trailers__dots .trailers__dot');
   const liveEl = document.getElementById('trailers-carousel-live');
 
- 
+  const total = slides.length;
+  if (!track || total === 0 || iframes.length !== total) return;
+
+  let index = 0;
+
+  function setIframeSources(activeIndex) {
+    iframes.forEach((iframe, i) => {
+      const url = iframe.getAttribute('data-src');
+      if (!url) return;
+      if (i === activeIndex) {
+        if (iframe.src !== url) iframe.src = url;
+      } else {
+        iframe.src = 'about:blank';
+      }
+    });
+  }
+
+  function announce() {
+    if (!liveEl) return;
+    liveEl.textContent = `Trailer ${index + 1} de ${total}`;
+  }
+
+  function updateUI() {
+    track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      if (i === index) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+    slides.forEach((slide, i) => {
+      slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+    });
+    setIframeSources(index);
+    announce();
+  }
 
   function goTo(newIndex) {
     index = ((newIndex % total) + total) % total;
