@@ -1130,3 +1130,85 @@
     );
     box-shadow: var(--shadow-card);
   }
+
+  .trailers__player iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: calc(var(--radius-2xl) - 3px);
+    border: 0;
+    background-color: var(--bg-surface);
+  }
+
+  .trailers__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+  }
+
+  .trailers__arrow {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    background-color: rgba(92, 224, 216, 0.08);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-xl);
+    line-height: 1;
+    cursor: pointer;
+    transition: var(--transition-color), var(--transition-transform);
+  }
+
+  .trailers__arrow:hover {
+    color: var(--cosmic-cyan);
+    border-color: var(--cosmic-cyan);
+  }
+
+  .trailers__arrow:active {
+    transform: scale(0.97);
+  }
+
+  .trailers__arrow--next {
+    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--cosmic-cyan) 72%, var(--border-strong));
+    background-color: color-mix(in srgb, var(--cosmic-cyan) 28%, transparent);
+  }
+
+  .trailers__arrow:focus-visible,
+  .trailers__dot:focus-visible {
+    outline: 2px solid var(--ring-focus);
+    outline-offset: 4px;
+  }
+
+  .trailers__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .trailers__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    background-color: rgba(92, 224, 216, 0.24);
+    cursor: pointer;
+    transition: var(--transition-color), var(--transition-transform);
+  }
+
+  .trailers__dot:hover {
+    border-color: var(--cosmic-cyan);
+    background-color: color-mix(in srgb, var(--cosmic-cyan) 55%, transparent);
+  }
+
+  .trailers__dot.is-active {
+    width: 0.5rem;
+    background-color: var(--cosmic-cyan);
+    border-color: var(--cosmic-cyan);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cosmic-cyan) 26%, transparent);
+  }
