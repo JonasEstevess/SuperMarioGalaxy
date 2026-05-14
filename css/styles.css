@@ -660,3 +660,156 @@
       padding-inline: 0;
     }
   }
+
+  /* Personagens — composição freeform (parallax rail: min-height 100vh; sem grid nos personagens) */
+  .personagens {
+    --personagens-stage-min-h: clamp(26rem, 52vh, 38rem);
+
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    min-height: 180vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: clamp(var(--space-10), 5vw, var(--space-16));
+    padding-inline: var(--space-gutter-x);
+    overflow-x: clip;
+    background-color: transparent;
+  }
+
+  .personagens__particles-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      linear-gradient(0deg, var(--particles-bg-scrim), var(--particles-bg-scrim)),
+      linear-gradient(
+        to top right,
+        var(--particles-bg-from) 0%,
+        var(--particles-bg-via) 50%,
+        var(--particles-bg-to) 100%
+      );
+    transition: background 500ms var(--ease-in-out-soft);
+  }
+
+  #personagens-particles-js {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #personagens-particles-js canvas {
+    pointer-events: auto;
+  }
+
+  .personagens__header {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    max-width: min(100%, 52rem);
+    margin-bottom: clamp(var(--space-6), 3.5vw, var(--space-12));
+    text-align: center;
+  }
+
+  .personagens__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--accent-star);
+    opacity: 0;
+    animation: personagens-header-in 760ms var(--ease-out-expo) forwards;
+  }
+
+  .personagens__title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--fs-display);
+    font-weight: var(--fw-extrabold);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-tight);
+    color: var(--text-primary);
+    opacity: 0;
+    animation: personagens-header-in 760ms var(--ease-out-expo) 55ms forwards;
+  }
+
+  .personagens__subtitle {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: personagens-header-in 760ms var(--ease-out-expo) 110ms forwards;
+  }
+
+  @keyframes personagens-header-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.85rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .personagens__stage {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: min(100%, 1400px);
+    min-height: var(--personagens-stage-min-h);
+    margin-inline: auto;
+    flex-shrink: 0;
+  }
+
+  .personagem {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    width: max-content;
+    max-width: min(94vw, 360px);
+    opacity: 0;
+    animation: personagem-reveal-opacity-only 740ms var(--ease-out-expo) forwards;
+  }
+
+  .personagem img {
+    display: block;
+    width: var(--pers-img-w);
+    height: auto;
+    max-width: 100%;
+  }
+
+  .personagem figcaption {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-tight);
+    text-align: center;
+    color: var(--text-primary);
+  }
+
+  /* Só opacity: o parallax GSAP controla transform nos figures (evita conflito com keyframes) */
+  @keyframes personagem-reveal-opacity-only {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
