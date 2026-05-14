@@ -813,3 +813,320 @@
       opacity: 1;
     }
   }
+
+  /* Quadrantes distintos: top/left únicos por checklist; escalas grandes / médias / menor */
+  .personagem--mario {
+    
+
+    top: 3%;
+    left: 18%;
+    z-index: 5;
+    animation-delay: calc(var(--stagger-base) * 1);
+  }
+
+  .personagem--luigi {
+    
+
+    top: 8%;
+    left: 65%;
+    z-index: 4;
+    animation-delay: calc(var(--stagger-base) * 2);
+  }
+
+  .personagem--peach {
+    
+
+    top: 65%;
+    left: 41%;
+    z-index: 3;
+    animation-delay: calc(var(--stagger-base) * 3);
+  }
+
+  .personagem--rosalina {
+    --pers-img-w: clamp(128px, 15vw, 200px);
+
+    top: 114%;
+    left: 69%;
+    z-index: 6;
+    animation-delay: calc(var(--stagger-base) * 4);
+  }
+
+  .personagem--yoshi {
+    --pers-img-w: clamp(200px, 27vw, 340px);
+
+    top: 94%;
+    left: 8%;
+    z-index: 7;
+    animation-delay: calc(var(--stagger-base) * 5);
+  }
+
+  .personagem--bowser-jr {
+   
+    top: 158%;
+    left: 41%;
+    z-index: 2;
+    animation-delay: calc(var(--stagger-base) * 6);
+  }
+
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .personagens {
+      --personagens-stage-min-h: clamp(23rem, 48vh, 34rem);
+    }
+
+    .personagem--mario {
+      left: 2%;
+      top: 12%;
+    }
+
+    .personagem--luigi {
+      left: 72%;
+      top: 7%;
+    }
+
+    .personagem--peach {
+      left: 22%;
+      top: 39%;
+    }
+
+    .personagem--rosalina {
+      left: 62%;
+      top: 41%;
+    }
+
+    .personagem--yoshi {
+      left: 1%;
+      top: 61%;
+      --pers-img-w: clamp(174px, 30vw, 300px);
+    }
+
+    .personagem--bowser-jr {
+      left: 48%;
+      top: 66%;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .personagens {
+      justify-content: flex-start;
+      padding-block: clamp(var(--space-10), 6vw, var(--space-16));
+      --personagens-stage-min-h: 0;
+    }
+
+    .personagens__stage {
+      min-height: 0;
+    }
+
+    .personagem {
+      position: relative;
+      inset: auto;
+      width: fit-content;
+      max-width: min(92vw, 22rem);
+      margin-inline-start: auto;
+      margin-inline-end: auto;
+      margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+      animation-duration: 640ms;
+    }
+
+    .personagem:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .personagem--mario {
+      top: auto;
+      left: auto;
+      margin-inline-start: 6%;
+      margin-inline-end: auto;
+      --pers-img-w: clamp(160px, 58vw, 240px);
+    }
+
+    .personagem--luigi {
+      top: auto;
+      left: auto;
+      margin-inline-start: auto;
+      margin-inline-end: 8%;
+      --pers-img-w: clamp(120px, 44vw, 190px);
+    }
+
+    .personagem--peach {
+      top: auto;
+      left: auto;
+      margin-inline-start: 14%;
+      margin-inline-end: auto;
+      --pers-img-w: clamp(100px, 40vw, 160px);
+    }
+
+    .personagem--rosalina {
+      top: auto;
+      left: auto;
+      margin-inline-start: auto;
+      margin-inline-end: 12%;
+      --pers-img-w: clamp(116px, 46vw, 176px);
+    }
+
+    .personagem--yoshi {
+      top: auto;
+      left: auto;
+      margin-inline-start: 5%;
+      margin-inline-end: auto;
+      --pers-img-w: clamp(180px, 68vw, 280px);
+    }
+
+    .personagem--bowser-jr {
+      top: auto;
+      left: auto;
+      margin-inline-start: auto;
+      margin-inline-end: 14%;
+      --pers-img-w: clamp(112px, 42vw, 184px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .personagens__eyebrow,
+    .personagens__title,
+    .personagens__subtitle {
+      animation: none;
+      opacity: 1;
+    }
+
+    .personagem {
+      animation: none !important;
+      opacity: 1;
+    }
+  }
+
+  .trailers {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding-block: var(--space-section-y);
+    padding-inline: var(--space-gutter-x);
+    border-top: 1px solid var(--border-subtle);
+    background:
+      radial-gradient(circle at 18% 18%, rgba(92, 224, 216, 0.28), transparent 42%),
+      radial-gradient(circle at 82% 14%, rgba(106, 60, 188, 0.48), transparent 54%),
+      radial-gradient(circle at 50% 100%, rgba(92, 224, 216, 0.14), transparent 50%),
+      linear-gradient(105deg, var(--bg-mid) 0%, var(--bg-surface) 42%, var(--cosmic-purple) 100%);
+  }
+
+  .trailers__bg-text {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    z-index: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(4.5rem, 13vw, 14rem);
+    font-weight: var(--fw-black);
+    line-height: 1;
+    letter-spacing: var(--ls-tight);
+    text-transform: uppercase;
+    color: var(--text-primary);
+    opacity: 0.06;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .trailers__header {
+    position: relative;
+    z-index: 2;
+    max-width: min(100%, 48rem);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .trailers__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--accent-star);
+    opacity: 0;
+    animation: trailers-reveal 620ms var(--ease-out-expo) forwards;
+  }
+
+  .trailers__title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+    text-wrap: balance;
+    opacity: 0;
+    animation: trailers-reveal 620ms var(--ease-out-expo) var(--stagger-base) forwards;
+  }
+
+  .trailers__subtitle {
+    margin: 0;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    opacity: 0;
+    animation: trailers-reveal 620ms var(--ease-out-expo) calc(var(--stagger-base) * 2) forwards;
+  }
+
+  @keyframes trailers-reveal {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.75rem, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .trailers__carousel {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1000px;
+    margin: clamp(var(--space-8), 5vw, var(--space-16)) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(var(--space-6), 2.8vw, var(--space-8));
+  }
+
+  .trailers__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .trailers__track {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transform: translate3d(0, 0, 0);
+    transition: transform var(--duration-slow) var(--ease-out-expo);
+  }
+
+  .trailers__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .trailers__player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    padding: 2px;
+    border: 1px solid var(--border-subtle);
+    background: linear-gradient(
+      120deg,
+      var(--cosmic-cyan) 0%,
+      var(--accent-star) 38%,
+      var(--cosmic-purple) 100%
+    );
+    box-shadow: var(--shadow-card);
+  }
