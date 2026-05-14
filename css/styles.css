@@ -1570,3 +1570,139 @@
       radial-gradient(circle at 68% 62%, color-mix(in srgb, var(--cosmic-purple) 66%, transparent), transparent 72%);
   }
 
+  .estreia__nebula--top-right {
+    top: calc(var(--space-6) * -1);
+    right: calc(var(--space-6) * -1);
+    background:
+      radial-gradient(circle at 52% 38%, color-mix(in srgb, var(--cosmic-purple) 66%, transparent), transparent 66%),
+      radial-gradient(circle at 24% 70%, color-mix(in srgb, var(--cosmic-rose) 42%, transparent), transparent 72%);
+  }
+
+  .estreia__nebula--bottom-left {
+    bottom: calc(var(--space-8) * -1);
+    left: calc(var(--space-6) * -1);
+    background:
+      radial-gradient(circle at 48% 44%, color-mix(in srgb, var(--cosmic-cyan) 38%, transparent), transparent 70%),
+      radial-gradient(circle at 62% 66%, color-mix(in srgb, var(--cosmic-purple) 50%, transparent), transparent 70%);
+  }
+
+  .estreia__galaxy {
+    right: calc(var(--space-4) * -1);
+    bottom: calc(var(--space-8) * -1);
+    width: clamp(12rem, 28vw, 22rem);
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-full);
+    background:
+      radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--text-primary) 96%, transparent), transparent 34%),
+      radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--cosmic-cyan) 45%, transparent), transparent 56%),
+      radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--cosmic-purple) 48%, transparent), transparent 72%);
+    filter: blur(var(--space-1));
+    opacity: 0.76;
+  }
+
+  .estreia__star {
+    z-index: 2;
+    width: clamp(var(--space-5), 3vw, var(--space-8));
+    height: auto;
+    filter: drop-shadow(0 0 var(--space-3) var(--accent-star-glow));
+  }
+
+  .estreia__star--tl {
+    top: calc(var(--space-8) * -0.5);
+    left: var(--space-6);
+  }
+
+  .estreia__star--tr {
+    top: var(--space-10);
+    right: var(--space-8);
+  }
+
+  .estreia__star--mr {
+    top: 44%;
+    right: var(--space-4);
+  }
+
+  .estreia__star--bl {
+    bottom: var(--space-16);
+    left: var(--space-4);
+  }
+
+  .estreia__star--br {
+    right: var(--space-12);
+    bottom: var(--space-10);
+  }
+
+  @media (max-width: 1023.98px) {
+    .estreia__countdown-card {
+      width: min(100%, 54rem);
+      padding-inline: var(--space-5);
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .estreia__container {
+      gap: var(--space-6);
+    }
+
+    .estreia__title {
+      font-size: clamp(var(--fs-2xl), 6vw, var(--fs-3xl));
+    }
+
+    .countdown {
+      --countdown-card-h: 5rem;
+      --countdown-digit-fs: 2.5rem;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6) var(--space-5);
+      justify-items: center;
+    }
+
+    .countdown-unit {
+      padding-inline: 0;
+      max-width: 100%;
+    }
+
+    .countdown-unit:not(:last-child)::after {
+      display: none;
+    }
+
+    .countdown-card {
+      width: min(100%, 5.75rem);
+    }
+
+    .estreia__countdown-card {
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .estreia__star--mr,
+    .estreia__star--br {
+      display: none;
+    }
+  }
+
+  .section {
+    padding: var(--space-section-y) var(--space-gutter-x);
+    background-color: var(--bg-mid);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section:nth-child(even) {
+    background-color: var(--bg-deep);
+  }
+
+  .section__title {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-snug);
+    color: var(--text-primary);
+  }
+
+  .section__text {
+    margin: 0;
+    max-width: var(--measure-reading);
+    font-size: var(--fs-md);
+    color: var(--text-muted);
+  }
