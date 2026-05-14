@@ -72,3 +72,7 @@ O projeto apresenta personagens, trailers, efeitos espaciais e seções interati
 - Mobile First
 - Tablet optimization
 - Desktop adaptation
+
+## Made by:
+- [Jonas Esteves](https://github.com/JonasEstevess);
+
