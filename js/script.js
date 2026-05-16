@@ -1,10 +1,10 @@
 function initStarfield() {
-  const canvas = document.getElementById('starfield');
+  const canvas = document.getElementById("starfield");
   if (!canvas || !canvas.getContext) {
     return { destroy() {} };
   }
 
-  const ctx = canvas.getContext('2d', { alpha: true });
+  const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) {
     return { destroy() {} };
   }
@@ -14,14 +14,14 @@ function initStarfield() {
   function readTokens() {
     const cs = getComputedStyle(root);
     return {
-      bgDeep: cs.getPropertyValue('--bg-deep').trim(),
-      bgMid: cs.getPropertyValue('--bg-mid').trim(),
-      textMuted: cs.getPropertyValue('--text-muted').trim(),
-      textPrimary: cs.getPropertyValue('--text-primary').trim(),
-      accentStar: cs.getPropertyValue('--accent-star').trim(),
-      cosmicCyan: cs.getPropertyValue('--cosmic-cyan').trim(),
-      cosmicPurple: cs.getPropertyValue('--cosmic-purple').trim(),
-      cosmicRose: cs.getPropertyValue('--cosmic-rose').trim(),
+      bgDeep: cs.getPropertyValue("--bg-deep").trim(),
+      bgMid: cs.getPropertyValue("--bg-mid").trim(),
+      textMuted: cs.getPropertyValue("--text-muted").trim(),
+      textPrimary: cs.getPropertyValue("--text-primary").trim(),
+      accentStar: cs.getPropertyValue("--accent-star").trim(),
+      cosmicCyan: cs.getPropertyValue("--cosmic-cyan").trim(),
+      cosmicPurple: cs.getPropertyValue("--cosmic-purple").trim(),
+      cosmicRose: cs.getPropertyValue("--cosmic-rose").trim(),
     };
   }
 
@@ -38,10 +38,13 @@ function initStarfield() {
   let rafId = 0;
   let scrollY = window.scrollY;
   let prefersReduce =
-    typeof window.matchMedia === 'function' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const reduceMq = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  const reduceMq =
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : null;
 
   function rebuildStars() {
     starsFar = [];
@@ -69,7 +72,7 @@ function initStarfield() {
     for (let i = 0; i < countNear; i++) {
       const rarity = rand();
       const glow = rarity > 0.91;
-      const glowHue = rand() > 0.5 ? 'cyan' : 'star';
+      const glowHue = rand() > 0.5 ? "cyan" : "star";
       starsNear.push({
         x: rand() * w,
         y: rand() * h,
@@ -89,7 +92,7 @@ function initStarfield() {
         nx: 0.12 + rand() * 0.76,
         ny: 0.08 + rand() * 0.84,
         r: (0.22 + rand() * 0.38) * Math.max(w, h),
-        hue: rand() > 0.5 ? 'purple' : 'rose',
+        hue: rand() > 0.5 ? "purple" : "rose",
       });
     }
   }
@@ -118,7 +121,14 @@ function initStarfield() {
 
     if (!w || !h) return;
 
-    const g = ctx.createRadialGradient(w * 0.45, h * 0.35, 0, w * 0.5, h * 0.55, Math.max(w, h) * 0.72);
+    const g = ctx.createRadialGradient(
+      w * 0.45,
+      h * 0.35,
+      0,
+      w * 0.5,
+      h * 0.55,
+      Math.max(w, h) * 0.72,
+    );
     g.addColorStop(0, t.bgMid || t.bgDeep);
     g.addColorStop(1, t.bgDeep);
     ctx.globalAlpha = 1;
@@ -129,10 +139,10 @@ function initStarfield() {
       const nb = nebulae[i];
       const cx = nb.nx * w;
       const cy = nb.ny * h;
-      const col = nb.hue === 'purple' ? t.cosmicPurple : t.cosmicRose;
+      const col = nb.hue === "purple" ? t.cosmicPurple : t.cosmicRose;
       const ng = ctx.createRadialGradient(cx, cy, 0, cx, cy, nb.r);
       ng.addColorStop(0, col);
-      ng.addColorStop(1, 'transparent');
+      ng.addColorStop(1, "transparent");
       ctx.globalAlpha = 0.035;
       ctx.fillStyle = ng;
       ctx.fillRect(0, 0, w, h);
@@ -141,7 +151,9 @@ function initStarfield() {
 
     for (let i = 0; i < starsFar.length; i++) {
       const s = starsFar[i];
-      const sine = prefersReduce ? 1 : Math.sin(animationTimeMs * s.twinkleRate + s.phase);
+      const sine = prefersReduce
+        ? 1
+        : Math.sin(animationTimeMs * s.twinkleRate + s.phase);
       const blink = prefersReduce ? 1 : 0.38 + 0.62 * (0.5 + 0.5 * sine);
       ctx.fillStyle = t.textMuted;
       ctx.globalAlpha = 0.28 * blink;
@@ -153,7 +165,9 @@ function initStarfield() {
 
     for (let i = 0; i < starsNear.length; i++) {
       const s = starsNear[i];
-      const drift = prefersReduce ? 0 : s.ny * 0.006 * Math.sin(animationTimeMs * 0.00055 + s.nx * 6.28);
+      const drift = prefersReduce
+        ? 0
+        : s.ny * 0.006 * Math.sin(animationTimeMs * 0.00055 + s.nx * 6.28);
       const px = (((s.x + parallax * (0.55 + s.nx * 0.45)) % w) + w) % w;
       const py = (((s.y + drift * (h / 540)) % h) + h) % h;
 
@@ -164,7 +178,7 @@ function initStarfield() {
 
       if (s.glow && !prefersReduce) {
         ctx.save();
-        ctx.shadowColor = s.glowHue === 'cyan' ? t.cosmicCyan : t.accentStar;
+        ctx.shadowColor = s.glowHue === "cyan" ? t.cosmicCyan : t.accentStar;
         ctx.shadowBlur = 5 + blinkNear * 7;
       }
 
@@ -189,8 +203,8 @@ function initStarfield() {
 
   function onReduceChange() {
     prefersReduce =
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     cancelAnimationFrame(rafId);
     rafId = 0;
@@ -208,7 +222,7 @@ function initStarfield() {
   }
 
   const resizeObs =
-    typeof ResizeObserver !== 'undefined'
+    typeof ResizeObserver !== "undefined"
       ? new ResizeObserver(() => {
           syncCanvasDimensions();
           paintFrame(performance.now());
@@ -223,8 +237,8 @@ function initStarfield() {
   if (resizeObs) {
     resizeObs.observe(root);
   }
-  window.addEventListener('resize', onWinResize, { passive: true });
-  window.addEventListener('scroll', onScrollParallax, { passive: true });
+  window.addEventListener("resize", onWinResize, { passive: true });
+  window.addEventListener("scroll", onScrollParallax, { passive: true });
 
   syncCanvasDimensions();
   const bootNow = performance.now();
@@ -234,8 +248,8 @@ function initStarfield() {
   }
 
   if (reduceMq) {
-    if (typeof reduceMq.addEventListener === 'function') {
-      reduceMq.addEventListener('change', onReduceChange);
+    if (typeof reduceMq.addEventListener === "function") {
+      reduceMq.addEventListener("change", onReduceChange);
     } else {
       reduceMq.addListener(onReduceChange);
     }
@@ -246,11 +260,11 @@ function initStarfield() {
       cancelAnimationFrame(rafId);
       rafId = 0;
       resizeObs?.disconnect();
-      window.removeEventListener('resize', onWinResize);
-      window.removeEventListener('scroll', onScrollParallax);
+      window.removeEventListener("resize", onWinResize);
+      window.removeEventListener("scroll", onScrollParallax);
       if (reduceMq) {
-        if (typeof reduceMq.removeEventListener === 'function') {
-          reduceMq.removeEventListener('change', onReduceChange);
+        if (typeof reduceMq.removeEventListener === "function") {
+          reduceMq.removeEventListener("change", onReduceChange);
         } else {
           reduceMq.removeListener(onReduceChange);
         }
@@ -260,14 +274,14 @@ function initStarfield() {
 }
 
 function initFloatingNav() {
-  const nav = document.querySelector('.floating-nav');
+  const nav = document.querySelector(".floating-nav");
   if (!nav) return;
 
-  const links = nav.querySelectorAll('.floating-nav__link[data-section]');
-  const sectionOrder = ['hero', 'personagens', 'trailers', 'estreia'];
+  const links = nav.querySelectorAll(".floating-nav__link[data-section]");
+  const sectionOrder = ["hero", "personagens", "trailers", "estreia"];
 
   function getThreshold() {
-    const heroEl = document.getElementById('hero');
+    const heroEl = document.getElementById("hero");
     if (heroEl) {
       return heroEl.offsetHeight * 0.6;
     }
@@ -277,15 +291,15 @@ function initFloatingNav() {
   function updateVisibility() {
     const threshold = getThreshold();
     if (window.scrollY > threshold) {
-      nav.classList.add('visible');
+      nav.classList.add("visible");
     } else {
-      nav.classList.remove('visible');
+      nav.classList.remove("visible");
     }
   }
 
   function updateActiveFromScroll() {
     const probeY = window.scrollY + window.innerHeight * 0.25;
-    let activeId = 'hero';
+    let activeId = "hero";
 
     for (const id of sectionOrder) {
       const el = document.getElementById(id);
@@ -295,8 +309,8 @@ function initFloatingNav() {
     }
 
     links.forEach((link) => {
-      const sec = link.getAttribute('data-section');
-      link.classList.toggle('floating-nav__link--active', sec === activeId);
+      const sec = link.getAttribute("data-section");
+      link.classList.toggle("floating-nav__link--active", sec === activeId);
     });
   }
 
@@ -305,162 +319,185 @@ function initFloatingNav() {
     updateActiveFromScroll();
   }
 
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize);
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize);
   onScrollOrResize();
 }
 
 function initMarioScrollAnimation() {
-  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
   gsap.registerPlugin(ScrollTrigger);
 
   const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
-      scrub: true
-    }
-  })
-
-   tl.to('.hero__mario', { y: '100vh', ease: 'none', duration: 1 }, 0)
-   .to('.hero__mario', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
-}
-
-function initYoshiScrollAnimation() {
-  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  
-  gsap.registerPlugin(ScrollTrigger);
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
-      scrub: true
-    }
-  })
-
-   tl.to('.hero__yoshi', { y: '100vh', ease: 'none', duration: 1 }, 0)
-   .to('.hero__yoshi', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
-}
-
-function initHeroContentScrollAnimation() {
-  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  
-  gsap.registerPlugin(ScrollTrigger);
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
-      scrub: true,
-      pin: '.hero__content-layer',
-      pinSpacing: false
-    }
-  })
-
-   .to('.hero__content-layer', { opacity: 0, ease: 'none', duration: 0.5 }, 0.5)
-
-   const tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
-      scrub: true,
-      pin: '.hero__scroll-indicator',
-      pinSpacing: false
-    }
-  }) 
-
-   .to('.hero__scroll-indicator', { opacity: 0, ease: 'none', duration: 0.1 }, 0.1)
-}
-
-function initPlanetZoomAnimation() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const planet = document.querySelector('.hero__planet');
-  if (!planet) return;
-
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
+      trigger: "#hero",
+      start: "top top",
+      end: "+=100%",
       scrub: true,
     },
-  }  ).fromTo(
-    planet,
-    {
-      xPercent: -50,
-      yPercent: 50,
-      scale: 1,
-      force3D: true,
-      transformOrigin: '50% 100%',
-    },
-    {
-      xPercent: -50,
-      yPercent: 50,
-      scale: 2.5,
-      ease: 'none',
-      duration: 1,
-    },
-    0
+  });
+
+  tl.to(".hero__mario", { y: "100vh", ease: "none", duration: 1 }, 0).to(
+    ".hero__mario",
+    { opacity: 0, ease: "none", duration: 0.5 },
+    0.5,
   );
 }
 
-function initPersonagensParallax() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+function initYoshiScrollAnimation() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const section = document.getElementById('personagens');
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "+=100%",
+      scrub: true,
+    },
+  });
+
+  tl.to(".hero__yoshi", { y: "100vh", ease: "none", duration: 1 }, 0).to(
+    ".hero__yoshi",
+    { opacity: 0, ease: "none", duration: 0.5 },
+    0.5,
+  );
+}
+
+function initHeroContentScrollAnimation() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: ".hero__content-layer",
+        pinSpacing: false,
+      },
+    })
+
+    .to(
+      ".hero__content-layer",
+      { opacity: 0, ease: "none", duration: 0.5 },
+      0.5,
+    );
+
+  const tl2 = gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: ".hero__scroll-indicator",
+        pinSpacing: false,
+      },
+    })
+
+    .to(
+      ".hero__scroll-indicator",
+      { opacity: 0, ease: "none", duration: 0.1 },
+      0.1,
+    );
+}
+
+function initPlanetZoomAnimation() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const planet = document.querySelector(".hero__planet");
+  if (!planet) return;
+
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+      },
+    })
+    .fromTo(
+      planet,
+      {
+        xPercent: -50,
+        yPercent: 50,
+        scale: 1,
+        force3D: true,
+        transformOrigin: "50% 100%",
+      },
+      {
+        xPercent: -50,
+        yPercent: 50,
+        scale: 2.5,
+        ease: "none",
+        duration: 1,
+      },
+      0,
+    );
+}
+
+function initPersonagensParallax() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.getElementById("personagens");
   if (!section) return;
 
   if (
-    typeof window.matchMedia === 'function' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
   }
 
   const parallaxConfigs = [
     {
-      selector: '.personagem--mario',
+      selector: ".personagem--mario",
       from: { x: -14, y: -42 },
       to: { x: 22, y: 188 },
       scrub: 0.8,
     },
     {
-      selector: '.personagem--luigi',
+      selector: ".personagem--luigi",
       from: { x: 18, y: -28 },
       to: { x: -32, y: 210 },
       scrub: 3.3,
     },
     {
-      selector: '.personagem--peach',
+      selector: ".personagem--peach",
       from: { x: -8, y: -50 },
       to: { x: 24, y: 164 },
       scrub: 1.05,
     },
     {
-      selector: '.personagem--rosalina',
+      selector: ".personagem--rosalina",
       from: { x: -20, y: -24 },
       to: { x: 36, y: 232 },
       scrub: 1.45,
     },
     {
-      selector: '.personagem--yoshi',
+      selector: ".personagem--yoshi",
       from: { x: 14, y: -38 },
       to: { x: -46, y: 176 },
       scrub: 0.65,
     },
     {
-      selector: '.personagem--bowser-jr',
+      selector: ".personagem--bowser-jr",
       from: { x: -16, y: -18 },
       to: { x: 30, y: 198 },
       scrub: 1.15,
@@ -468,34 +505,35 @@ function initPersonagensParallax() {
   ];
 
   ScrollTrigger.matchMedia({
-    '(prefers-reduced-motion: no-preference) and (min-width: 768px)': function () {
-      parallaxConfigs.forEach((cfg) => {
-        const el = document.querySelector(cfg.selector);
-        if (!el) return;
+    "(prefers-reduced-motion: no-preference) and (min-width: 768px)":
+      function () {
+        parallaxConfigs.forEach((cfg) => {
+          const el = document.querySelector(cfg.selector);
+          if (!el) return;
 
-        gsap.fromTo(
-          el,
-          {
-            x: cfg.from.x,
-            y: cfg.from.y,
-            force3D: true,
-          },
-          {
-            x: cfg.to.x,
-            y: cfg.to.y,
-            ease: 'none',
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: cfg.scrub,
-              invalidateOnRefresh: true,
+          gsap.fromTo(
+            el,
+            {
+              x: cfg.from.x,
+              y: cfg.from.y,
+              force3D: true,
             },
-          }
-        );
-      });
-    },
+            {
+              x: cfg.to.x,
+              y: cfg.to.y,
+              ease: "none",
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: cfg.scrub,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
+        });
+      },
   });
 }
 
@@ -503,25 +541,28 @@ function initPersonagensParallax() {
  * Fundo particles.js na seção #personagens (cores via tokens --particles-* no :root).
  */
 function initPersonagensBg() {
-  const section = document.getElementById('personagens');
-  const holderId = 'personagens-particles-js';
+  const section = document.getElementById("personagens");
+  const holderId = "personagens-particles-js";
 
-  if (!section || typeof window.particlesJS !== 'function') {
+  if (!section || typeof window.particlesJS !== "function") {
     return;
   }
 
   const root = document.documentElement;
 
   function hexToRgbParticles(hex) {
-    if (typeof hex !== 'string' || !hex.trim()) {
+    if (typeof hex !== "string" || !hex.trim()) {
       return null;
     }
     const h = hex.trim();
-    if (typeof window.hexToRgb === 'function') {
+    if (typeof window.hexToRgb === "function") {
       return window.hexToRgb(h);
     }
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    const expanded = h.replace(shorthandRegex, (_m, r, g, b) => r + r + g + g + b + b);
+    const expanded = h.replace(
+      shorthandRegex,
+      (_m, r, g, b) => r + r + g + g + b + b,
+    );
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(expanded);
     return result
       ? {
@@ -535,17 +576,17 @@ function initPersonagensBg() {
   function readParticleColorTokens() {
     const cs = getComputedStyle(root);
     return {
-      dot: cs.getPropertyValue('--particles-dot').trim(),
-      line: cs.getPropertyValue('--particles-line').trim(),
-      accent: cs.getPropertyValue('--particles-accent').trim(),
+      dot: cs.getPropertyValue("--particles-dot").trim(),
+      line: cs.getPropertyValue("--particles-line").trim(),
+      accent: cs.getPropertyValue("--particles-accent").trim(),
     };
   }
 
   function applyParticlesColorsFromCss(pJS) {
     const t = readParticleColorTokens();
-    const dot = t.dot || '#00f5ff';
-    const line = t.line || '#00d9ff';
-    const accent = t.accent || '#0096c7';
+    const dot = t.dot || "#00f5ff";
+    const line = t.line || "#00d9ff";
+    const accent = t.accent || "#0096c7";
 
     pJS.particles.color.value = dot;
     const rgbDot = hexToRgbParticles(dot);
@@ -563,8 +604,8 @@ function initPersonagensBg() {
   }
 
   const prefersReduceMq =
-    typeof window.matchMedia === 'function'
-      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
       : null;
 
   function prefersReducedMotion() {
@@ -572,13 +613,13 @@ function initPersonagensBg() {
   }
 
   if (prefersReducedMotion()) {
-    section.classList.add('personagens--particles-reduced');
+    section.classList.add("personagens--particles-reduced");
     return;
   }
 
   const narrowMq =
-    typeof window.matchMedia === 'function'
-      ? window.matchMedia('(max-width: 767.98px)')
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(max-width: 767.98px)")
       : null;
 
   function isNarrowViewport() {
@@ -595,12 +636,12 @@ function initPersonagensBg() {
           value: mobile ? 80 : 140,
           density: { enable: true, value_area: 800 },
         },
-        color: { value: t.dot || '#00f5ff' },
+        color: { value: t.dot || "#00f5ff" },
         shape: {
-          type: 'circle',
+          type: "circle",
           stroke: {
             width: 0.5,
-            color: t.accent || '#0096c7',
+            color: t.accent || "#0096c7",
           },
         },
         opacity: {
@@ -626,24 +667,24 @@ function initPersonagensBg() {
         line_linked: {
           enable: true,
           distance: 160,
-          color: t.line || '#00d9ff',
+          color: t.line || "#00d9ff",
           opacity: 0.4,
           width: 1.2,
         },
         move: {
           enable: true,
           speed: 2,
-          direction: 'none',
+          direction: "none",
           random: true,
           straight: false,
-          out_mode: 'bounce',
+          out_mode: "bounce",
         },
       },
       interactivity: {
-        detect_on: 'canvas',
+        detect_on: "canvas",
         events: {
-          onhover: { enable: true, mode: 'grab' },
-          onclick: { enable: !mobile, mode: 'push' },
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: !mobile, mode: "push" },
           resize: true,
         },
         modes: {
@@ -689,7 +730,7 @@ function initPersonagensBg() {
   }
 
   const io =
-    typeof IntersectionObserver !== 'undefined'
+    typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(
           (entries) => {
             const visible = entries.some((e) => e.isIntersecting);
@@ -699,7 +740,7 @@ function initPersonagensBg() {
               pausePersonagensDraw();
             }
           },
-          { root: null, threshold: 0, rootMargin: '0px' }
+          { root: null, threshold: 0, rootMargin: "0px" },
         )
       : null;
 
@@ -709,7 +750,7 @@ function initPersonagensBg() {
 
   let themeDebounce = 0;
   const themeObserver =
-    typeof MutationObserver !== 'undefined'
+    typeof MutationObserver !== "undefined"
       ? new MutationObserver(() => {
           window.clearTimeout(themeDebounce);
           themeDebounce = window.setTimeout(() => {
@@ -721,7 +762,7 @@ function initPersonagensBg() {
   if (themeObserver) {
     themeObserver.observe(root, {
       attributes: true,
-      attributeFilter: ['class', 'data-theme'],
+      attributeFilter: ["class", "data-theme"],
     });
   }
 
@@ -733,8 +774,8 @@ function initPersonagensBg() {
         resumePersonagensDraw();
       }
     };
-    if (typeof prefersReduceMq.addEventListener === 'function') {
-      prefersReduceMq.addEventListener('change', onReduce);
+    if (typeof prefersReduceMq.addEventListener === "function") {
+      prefersReduceMq.addEventListener("change", onReduce);
     } else {
       prefersReduceMq.addListener(onReduce);
     }
@@ -747,16 +788,16 @@ function initPersonagensBg() {
 function initEstreiaCountdown() {
   /** @typedef {{ dia: number; hor: number; min: number; seg: number }} TempoSplit */
 
-  if (!document.querySelector('#estreia .countdown-unit')) return;
+  if (!document.querySelector("#estreia .countdown-unit")) return;
 
-  const ALVO_ESTREIA = new Date('2026-12-25T00:00:00').getTime();
-  const UNIT_KEYS = /** @type {const} */ (['dia', 'hor', 'min', 'seg']);
-  const liveEl = document.getElementById('estreia-countdown-live');
+  const ALVO_ESTREIA = new Date("2026-12-25T00:00:00").getTime();
+  const UNIT_KEYS = /** @type {const} */ (["dia", "hor", "min", "seg"]);
+  const liveEl = document.getElementById("estreia-countdown-live");
   let intervalId = 0;
 
   const reduceMq =
-    typeof window.matchMedia === 'function'
-      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
       : null;
 
   function prefersReducedMotion() {
@@ -787,9 +828,9 @@ function initEstreiaCountdown() {
    */
   function formatar(n, unit) {
     const diff = ALVO_ESTREIA - Date.now();
-    if (diff <= 0 && unit === 'dia') return '000';
-    if (unit === 'dia') return String(n);
-    return String(n).padStart(2, '0');
+    if (diff <= 0 && unit === "dia") return "000";
+    if (unit === "dia") return String(n);
+    return String(n).padStart(2, "0");
   }
 
   /**
@@ -797,9 +838,11 @@ function initEstreiaCountdown() {
    * @returns {HTMLElement | null}
    */
   function elValorParaUnidade(unitKey) {
-    const root = document.querySelector(`.countdown-unit[data-unit="${unitKey}"]`);
+    const root = document.querySelector(
+      `.countdown-unit[data-unit="${unitKey}"]`,
+    );
     if (!root) return null;
-    return root.querySelector('.countdown-value');
+    return root.querySelector(".countdown-value");
   }
 
   /**
@@ -809,7 +852,7 @@ function initEstreiaCountdown() {
   function pintarValorEstatico(unitKey, formatted) {
     const el = elValorParaUnidade(unitKey);
     if (!el) return;
-    el.classList.remove('countdown-value--drop');
+    el.classList.remove("countdown-value--drop");
     el.textContent = formatted;
   }
 
@@ -821,17 +864,17 @@ function initEstreiaCountdown() {
     const el = elValorParaUnidade(unitKey);
     if (!el) return;
 
-    el.classList.remove('countdown-value--drop');
+    el.classList.remove("countdown-value--drop");
     void el.offsetWidth;
     el.textContent = formatted;
-    el.classList.add('countdown-value--drop');
+    el.classList.add("countdown-value--drop");
 
     const onEnd = (e) => {
-      if (e.animationName !== 'countdown-slide-down') return;
-      el.removeEventListener('animationend', onEnd);
-      el.classList.remove('countdown-value--drop');
+      if (e.animationName !== "countdown-slide-down") return;
+      el.removeEventListener("animationend", onEnd);
+      el.classList.remove("countdown-value--drop");
     };
-    el.addEventListener('animationend', onEnd);
+    el.addEventListener("animationend", onEnd);
   }
 
   /** @type {TempoSplit} */
@@ -844,7 +887,7 @@ function initEstreiaCountdown() {
    * @returns {number}
    */
   function paraBlocoMinuto(v) {
-    return ((v.dia * 24 + v.hor) * 60 + v.min);
+    return (v.dia * 24 + v.hor) * 60 + v.min;
   }
 
   /**
@@ -857,14 +900,17 @@ function initEstreiaCountdown() {
     if (diff <= 0) {
       if (ultimoBlocoMinutoAnunciado !== -2) {
         liveEl.textContent =
-          'Contagem terminada para a estreia de Super Mario Galaxy: O Filme no dia vinte e cinco de dezembro de dois mil e vinte e seis.';
+          "Contagem terminada para a estreia de Super Mario Galaxy: O Filme no dia vinte e cinco de dezembro de dois mil e vinte e seis.";
         ultimoBlocoMinutoAnunciado = -2;
       }
       return;
     }
 
     const bloco = paraBlocoMinuto(v);
-    if (bloco !== ultimoBlocoMinutoAnunciado || ultimoBlocoMinutoAnunciado === -1) {
+    if (
+      bloco !== ultimoBlocoMinutoAnunciado ||
+      ultimoBlocoMinutoAnunciado === -1
+    ) {
       ultimoBlocoMinutoAnunciado = bloco;
 
       function plural(unit, label, singularLabel) {
@@ -872,14 +918,13 @@ function initEstreiaCountdown() {
       }
 
       const partes = [
-        plural(v.dia, 'dias', 'dia'),
-        plural(v.hor, 'horas', 'hora'),
-        plural(v.min, 'minutos', 'minuto'),
-        plural(v.seg, 'segundos', 'segundo'),
+        plural(v.dia, "dias", "dia"),
+        plural(v.hor, "horas", "hora"),
+        plural(v.min, "minutos", "minuto"),
+        plural(v.seg, "segundos", "segundo"),
       ];
 
-      liveEl.textContent =
-        `Restam ${partes.slice(0, 3).join(', ')} e ${partes[3]} para a estreia nos cinemas na meia-noite local de vinte e cinco de dezembro de dois mil e vinte e seis.`;
+      liveEl.textContent = `Restam ${partes.slice(0, 3).join(", ")} e ${partes[3]} para a estreia nos cinemas na meia-noite local de vinte e cinco de dezembro de dois mil e vinte e seis.`;
     }
   }
 
@@ -888,9 +933,11 @@ function initEstreiaCountdown() {
    * @param {TempoSplit} v
    */
   function sincronizarTudoSilencioso(v) {
-    document.querySelectorAll('.countdown-value.countdown-value--drop').forEach((el) => {
-      el.classList.remove('countdown-value--drop');
-    });
+    document
+      .querySelectorAll(".countdown-value.countdown-value--drop")
+      .forEach((el) => {
+        el.classList.remove("countdown-value--drop");
+      });
 
     for (let i = 0; i < UNIT_KEYS.length; i++) {
       const key = UNIT_KEYS[i];
@@ -922,7 +969,7 @@ function initEstreiaCountdown() {
     if (!contagemEncerrada) {
       contagemEncerrada = true;
       window.dispatchEvent(
-        new CustomEvent('estreia-countdown-complete', {
+        new CustomEvent("estreia-countdown-complete", {
           bubbles: true,
           detail: { alvoTimestamp: ALVO_ESTREIA },
         }),
@@ -964,9 +1011,9 @@ function initEstreiaCountdown() {
   }
 
   document.addEventListener(
-    'visibilitychange',
+    "visibilitychange",
     () => {
-      if (document.visibilityState !== 'visible') return;
+      if (document.visibilityState !== "visible") return;
 
       if (Date.now() >= ALVO_ESTREIA) {
         finalizarContagemSeNecessario();
@@ -984,7 +1031,7 @@ function initEstreiaCountdown() {
   );
 
   window.addEventListener(
-    'beforeunload',
+    "beforeunload",
     () => {
       if (intervalId) window.clearInterval(intervalId);
     },
@@ -993,16 +1040,16 @@ function initEstreiaCountdown() {
 }
 
 function initTrailersCarousel() {
-  const root = document.querySelector('.trailers__carousel');
+  const root = document.querySelector(".trailers__carousel");
   if (!root) return;
 
-  const track = root.querySelector('.trailers__track');
-  const slides = root.querySelectorAll('.trailers__slide');
-  const iframes = root.querySelectorAll('.trailers__player iframe');
-  const prevBtn = root.querySelector('.trailers__arrow--prev');
-  const nextBtn = root.querySelector('.trailers__arrow--next');
-  const dots = root.querySelectorAll('.trailers__dots .trailers__dot');
-  const liveEl = document.getElementById('trailers-carousel-live');
+  const track = root.querySelector(".trailers__track");
+  const slides = root.querySelectorAll(".trailers__slide");
+  const iframes = root.querySelectorAll(".trailers__player iframe");
+  const prevBtn = root.querySelector(".trailers__arrow--prev");
+  const nextBtn = root.querySelector(".trailers__arrow--next");
+  const dots = root.querySelectorAll(".trailers__dots .trailers__dot");
+  const liveEl = document.getElementById("trailers-carousel-live");
 
   const total = slides.length;
   if (!track || total === 0 || iframes.length !== total) return;
@@ -1011,12 +1058,12 @@ function initTrailersCarousel() {
 
   function setIframeSources(activeIndex) {
     iframes.forEach((iframe, i) => {
-      const url = iframe.getAttribute('data-src');
+      const url = iframe.getAttribute("data-src");
       if (!url) return;
       if (i === activeIndex) {
         if (iframe.src !== url) iframe.src = url;
       } else {
-        iframe.src = 'about:blank';
+        iframe.src = "about:blank";
       }
     });
   }
@@ -1029,13 +1076,13 @@ function initTrailersCarousel() {
   function updateUI() {
     track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
     dots.forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === index);
-      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
-      if (i === index) dot.setAttribute('aria-current', 'true');
-      else dot.removeAttribute('aria-current');
+      dot.classList.toggle("is-active", i === index);
+      dot.setAttribute("aria-selected", i === index ? "true" : "false");
+      if (i === index) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
     });
     slides.forEach((slide, i) => {
-      slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+      slide.setAttribute("aria-hidden", i === index ? "false" : "true");
     });
     setIframeSources(index);
     announce();
@@ -1046,24 +1093,24 @@ function initTrailersCarousel() {
     updateUI();
   }
 
-  prevBtn?.addEventListener('click', () => goTo(index - 1));
-  nextBtn?.addEventListener('click', () => goTo(index + 1));
+  prevBtn?.addEventListener("click", () => goTo(index - 1));
+  nextBtn?.addEventListener("click", () => goTo(index + 1));
 
   dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => goTo(i));
+    dot.addEventListener("click", () => goTo(i));
   });
 
-  root.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
+  root.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
       e.preventDefault();
       goTo(index - 1);
-    } else if (e.key === 'ArrowRight') {
+    } else if (e.key === "ArrowRight") {
       e.preventDefault();
       goTo(index + 1);
-    } else if (e.key === 'Home') {
+    } else if (e.key === "Home") {
       e.preventDefault();
       goTo(0);
-    } else if (e.key === 'End') {
+    } else if (e.key === "End") {
       e.preventDefault();
       goTo(total - 1);
     }
@@ -1072,7 +1119,7 @@ function initTrailersCarousel() {
   updateUI();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initFloatingNav();
   initStarfield();
   initMarioScrollAnimation();
